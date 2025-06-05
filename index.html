@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Recipe Generator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<!--
+    Body with minimum height to center content, padding, and dark gradient background
+    defined in style.css
+-->
+<body class="min-h-screen flex items-center justify-center p-4">
+    <!-- Main application card container -->
+    <div class="p-8 rounded-2xl shadow-xl max-w-2xl w-full text-center card-container">
+        <!-- Main Heading -->
+        <h1 class="text-4xl font-extrabold mb-6">
+            Unleash Your Inner Chef: AI Recipe Generator
+        </h1>
+        <!-- Introductory Paragraph -->
+        <p class="mb-8 text-lg">
+            Don't let anything go to waste! Input your ingredients, and I'll find a tasty purpose for them!
+        </p>
+
+        <!-- Input Fields Section -->
+        <div class="space-y-4 mb-6 text-left">
+            <!-- Ingredients Input -->
+            <div>
+                <label for="ingredientInput" class="block text-sm font-semibold mb-2">Ingredients on hand (type and press Enter/Comma):</label>
+                <div class="relative">
+                    <input
+                        type="text"
+                        id="ingredientInput"
+                        class="w-full p-3 rounded-lg outline-none transition-all duration-200 text-base input-field"
+                        placeholder="e.g., chicken, rice, soy sauce"
+                    />
+                    <!-- Autocomplete Suggestions Container (hidden by default) -->
+                    <div id="autocompleteSuggestions" class="absolute z-10 w-full bg-gray-700 rounded-lg shadow-lg hidden">
+                    </div>
+                </div>
+                <!-- Display Area for Ingredient Tags -->
+                <div id="ingredientsTagsContainer" class="flex flex-wrap gap-2 mt-2">
+                </div>
+                <!-- Hidden input to store current ingredients as a comma-separated string for JS -->
+                <input type="hidden" id="hiddenIngredientsInput" value="">
+            </div>
+
+            <!-- Cuisine Preference Input -->
+            <div>
+                <label for="cuisineInput" class="block text-sm font-semibold mb-2">Cuisine Preference (optional):</label>
+                <input
+                    type="text"
+                    id="cuisineInput"
+                    class="w-full p-3 rounded-lg outline-none transition-all duration-200 text-base input-field"
+                    placeholder="e.g., Italian, Mexican, Asian"
+                />
+            </div>
+
+            <!-- Dietary Restrictions Input -->
+            <div>
+                <label for="dietaryInput" class="block text-sm font-semibold mb-2">Dietary Restrictions (optional):</label>
+                <input
+                    type="text"
+                    id="dietaryInput"
+                    class="w-full p-3 rounded-lg outline-none transition-all duration-200 text-base input-field"
+                    placeholder="e.g., vegetarian, gluten-free, low-carb"
+                />
+            </div>
+
+            <!-- Meal Type Input -->
+            <div>
+                <label for="mealTypeInput" class="block text-sm font-semibold mb-2">Meal Type (optional):</label>
+                <input
+                    type="text"
+                    id="mealTypeInput"
+                    class="w-full p-3 rounded-lg outline-none transition-all duration-200 text-base input-field"
+                    placeholder="e.g., dinner, breakfast, dessert"
+                />
+            </div>
+        </div>
+
+        <!-- Error Message Display Area (hidden by default, styled via style.css) -->
+        <div id="errorMessage" class="hidden px-4 py-3 rounded-xl relative mb-6 text-left error-message" role="alert">
+            <span id="errorText" class="block sm:inline"></span>
+        </div>
+
+        <!-- Action Buttons: Generate and Surprise Me! -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <button
+                type="button" 
+                id="generateButton"
+                class="w-full py-3 px-6 rounded-xl text-white font-bold text-lg transition-all duration-300 transform generate-button"
+            >
+                <span id="buttonText">Generate Recipe</span>
+                <!-- Loading Spinner (hidden by default) -->
+                <div id="loadingSpinner" class="hidden flex items-center justify-center">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Let's Get Cooking!
+                </div>
+            </button>
+            <button
+                type="button" 
+                id="luckyButton"
+                class="w-full py-3 px-6 rounded-xl text-white font-bold text-lg transition-all duration-300 transform lucky-button"
+            >
+                Surprise Me!
+            </button>
+        </div>
+
+        <!-- Recipe Output Section (hidden by default, styled via style.css) -->
+        <div id="recipeOutputContainer" class="mt-8 hidden p-6 rounded-xl shadow-inner text-left recipe-output-box">
+            <h2 class="text-2xl font-semibold mb-4">Your AI-Crafted Creation:</h2>
+            <!-- Area where the generated recipe (Markdown converted to HTML) will be displayed -->
+            <div id="recipeOutput" class="recipe-output leading-relaxed"></div>
+            
+            <!-- Recipe Action Buttons -->
+            <div class="mt-6 flex justify-end space-x-4">
+                <button
+                    type="button" id="copyRecipeButton"
+                    class="py-2 px-4 rounded-lg text-white font-semibold copy-button"
+                >
+                    Copy Recipe
+                </button>
+                <button
+                    type="button" id="downloadPdfButton" class="py-2 px-4 rounded-lg text-white font-semibold download-button" >
+                    Download PDF
+                </button>
+                <button
+                    type="button" id="clearAllButton" class="py-2 px-4 rounded-lg text-white font-semibold clear-button"
+                >
+                    Start Afresh!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>

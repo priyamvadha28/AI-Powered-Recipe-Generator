@@ -1,0 +1,245 @@
+/* Custom font for Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    /* Body background gradient for dark mode */
+    background-image: linear-gradient(to bottom right, #1a202c, #2d3748); /* Darker gradient */
+}
+
+/* Main card container background for better contrast */
+.card-container {
+    background-color: #1f2937; /* A slightly lighter dark gray for the card itself */
+    color: #e2e8f0; /* Default text color for the card content */
+    border: 1px solid #4a5568; /* Add a subtle border to define its edges */
+}
+
+/* Ensure labels are clearly visible and bold for prominence */
+label {
+    color: #e2e8f0 !important; /* Force light gray */
+    font-weight: 600 !important; /* Make them semi-bold */
+}
+
+/* Markdown rendering basic styles */
+.recipe-output h2 {
+    font-size: 1.75rem; /* text-2xl */
+    font-weight: 700; /* font-bold */
+    margin-top: 1.5rem; /* mt-6 */
+    margin-bottom: 0.75rem; /* mb-3 */
+    color: #a78bfa; /* Lighter purple for dark mode headings */
+}
+
+.recipe-output h3 {
+    font-size: 1.25rem; /* text-xl */
+    font-weight: 600; /* font-semibold */
+    margin-top: 1rem; /* mt-4 */
+    margin-bottom: 0.5rem; /* mb-2 */
+    color: #c4b5fd; /* Even lighter purple for sub-headings */
+}
+
+.recipe-output ul, .recipe-output ol {
+    list-style-position: inside;
+    margin-left: 1.25rem; 
+    margin-bottom: 1rem;
+}
+
+.recipe-output ul li, .recipe-output ol li {
+    margin-bottom: 0.25rem;
+    line-height: 1.5;
+    color: #e2e8f0; /* Light gray for list items */
+}
+
+.recipe-output p {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+    color: #cbd5e1; /* Light gray for paragraphs */
+}
+
+/* Main heading within the card container */
+.card-container h1 {
+    color: #d8b4fe; /* Lighter purple for main heading */
+}
+
+/* Paragraphs within the card container */
+.card-container p {
+    color: #a0aec0; /* Lighter gray for introductory text */
+}
+
+.input-field {
+    background-color: #2d3748; /* Darker background for inputs */
+    border-color: #4a5568; /* Darker border */
+    color: #e2e8f0; /* Light text in inputs */
+}
+
+.input-field::placeholder {
+    color: #94a3b8 !important; /* Slightly lighter placeholder for better visibility */
+    opacity: 1 !important; /* Ensure full opacity */
+}
+
+.input-field:focus {
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.6); 
+    border-color: #8b5cf6; /* Purple border on focus */
+}
+
+.generate-button {
+    background-image: linear-gradient(to right, #6d28d9, #8b5cf6); /* Darker purple gradient */
+    box-shadow: 0 4px 15px rgba(109, 40, 217, 0.4); /* Stronger shadow */
+}
+
+.generate-button:hover:not(:disabled) { /* Apply hover only when not disabled */
+    background-image: linear-gradient(to right, #8b5cf6, #6d28d9); /* Reverse gradient on hover */
+    box-shadow: 0 6px 20px rgba(109, 40, 217, 0.6); /* Even stronger shadow */
+}
+
+/* Lucky Button Styles */
+.lucky-button {
+    background-color: #10b981; 
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+.lucky-button:hover:not(:disabled) {
+    background-color: #059669; /* Darker green on hover */
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+}
+
+/* Ensure these buttons are explicitly block level if they were somehow inline */
+.generate-button, .lucky-button {
+    display: block; 
+}
+
+
+.error-message {
+    background-color: #4a1c1c; /* Darker red for error background */
+    border-color: #8b0000; /* Even darker red border */
+    color: #fed7d7; /* Light red text for contrast */
+}
+
+.recipe-output-box {
+    background-color: #2d3748; /* Darker background for output */
+    border: 1px solid #4a5568; /* Subtle border */
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); /* Inner shadow, slightly darker */
+    max-height: 0; /* Starts collapsed */
+    opacity: 0; /* Starts invisible */
+    overflow-y: hidden; /* Start with hidden overflow to enable transition */
+    transition: max-height 0.7s ease-out, opacity 0.5s ease-out, padding 0.5s ease-out; /* Smooth transition */
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* State when it should be visible */
+.recipe-output-box:not(.hidden) { /* Use :not(.hidden) to trigger these styles */
+    max-height: 80vh; /* Allow recipe box to take up 80% of viewport height */
+    opacity: 1;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    overflow-y: auto; /* Enable vertical scrolling when content exceeds max-height */
+}
+
+/* Error message transition */
+.error-message {
+    background-color: #4a1c1c; /* Darker red for error background */
+    border-color: #8b0000; /* Even darker red border */
+    color: #fed7d7; /* Light red text for contrast */
+    max-height: 0; /* Starts collapsed */
+    opacity: 0; /* Starts invisible */
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, opacity 0.3s ease-out, padding 0.3s ease-out;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* State when it should be visible */
+.error-message:not(.hidden) { /* Use :not(.hidden) to trigger these styles */
+    max-height: 100px; /* Adjust if your error messages are very long */
+    opacity: 1;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+/* Autocomplete suggestions transition */
+#autocompleteSuggestions {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    background-color: #2d3748; /* Darker background for consistency */
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    top: calc(100% + 5px); /* Position it just below the input field */
+    
+    /* ADD THESE FOR SMOOTH FADE */
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+}
+
+#autocompleteSuggestions:not(.hidden) {
+    max-height: 200px;
+    opacity: 1;
+}
+
+/* New: Ingredient Tag Styles */
+.ingredient-tag {
+    background-color: #6d28d9; /* Deep purple */
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px; /* rounded-full */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500; /* font-medium */
+    display: inline-flex;
+    align-items: center;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.ingredient-tag button {
+    margin-left: 0.5rem;
+    background-color: #5b21b6; /* Slightly darker purple for button */
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.ingredient-tag button:hover {
+    background-color: #4c1d95; /* Even darker purple on hover */
+}
+
+/* Copy and Clear Buttons */
+.copy-button {
+    background-color: #8b5cf6;
+    box-shadow: 0 2px 5px rgba(139, 92, 246, 0.3);
+}
+
+.copy-button:hover {
+    background-color: #7c3aed; /* Darker purple on hover */
+}
+
+.clear-button {
+    background-color: #ef4444;
+    box-shadow: 0 2px 5px rgba(239, 68, 68, 0.3);
+}
+
+.clear-button:hover {
+    background-color: #dc2626; /* Darker red on hover */
+}
+
+/* Adjust button styles to handle disabled state */
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* New: Download Button Styles */
+.download-button {
+    background-color: #0ea5e9;
+    box-shadow: 0 2px 5px rgba(14, 165, 233, 0.3);
+}
+
+.download-button:hover:not(:disabled) { /* Apply hover only when not disabled */
+    background-color: #0284c7;
+}
